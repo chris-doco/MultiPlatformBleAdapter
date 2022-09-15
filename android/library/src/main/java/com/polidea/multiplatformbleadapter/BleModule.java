@@ -1595,11 +1595,13 @@ public class BleModule implements BleAdapter {
                 NotificationSetupMode setupMode = cccDescriptor != null
                         ? NotificationSetupMode.QUICK_SETUP
                         : NotificationSetupMode.COMPAT;
-                if (characteristic.isNotifiable()) {
+                // Hack
+                Boolean isSpecial = characteristic.getUuid().toString().startsWith("6e400008");
+                if (!isSpecial && characteristic.isNotifiable()) {
                     return connection.setupNotification(characteristic.gattCharacteristic, setupMode);
                 }
 
-                if (characteristic.isIndicatable()) {
+                if (isSpecial || characteristic.isIndicatable()) {
                     return connection.setupIndication(characteristic.gattCharacteristic, setupMode);
                 }
 
