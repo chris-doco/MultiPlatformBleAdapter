@@ -1597,6 +1597,10 @@ public class BleModule implements BleAdapter {
                         : NotificationSetupMode.COMPAT;
                 // Hack
                 Boolean isSpecial = characteristic.getUuid().toString().startsWith("6e400008");
+                if (isSpecial) {
+                    RxBleLog.i("Special characteristic.");
+                    setupMode = NotificationSetupMode.COMPAT;
+                }
                 if (!isSpecial && characteristic.isNotifiable()) {
                     return connection.setupNotification(characteristic.gattCharacteristic, setupMode);
                 }
