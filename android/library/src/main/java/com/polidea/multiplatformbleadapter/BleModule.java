@@ -12,6 +12,7 @@ import android.os.ParcelUuid;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.polidea.multiplatformbleadapter.errors.BleError;
@@ -1598,7 +1599,7 @@ public class BleModule implements BleAdapter {
                 // Hack
                 Boolean isSpecial = characteristic.getUuid().toString().startsWith("6e400008");
                 if (isSpecial) {
-                    RxBleLog.i("Special characteristic.");
+                    Log.i("ble", "Subscribing to special characteristic.");
                     setupMode = NotificationSetupMode.COMPAT;
                 }
                 if (!isSpecial && characteristic.isNotifiable()) {
