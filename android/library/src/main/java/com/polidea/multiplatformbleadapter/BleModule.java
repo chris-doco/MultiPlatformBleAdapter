@@ -1,6 +1,7 @@
 package com.polidea.multiplatformbleadapter;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
@@ -1599,14 +1600,14 @@ public class BleModule implements BleAdapter {
                 // Hack
                 Boolean isSpecial = characteristic.getUuid().toString().startsWith("6e400008");
                 if (isSpecial) {
-                    Log.i("ble", "Subscribing to special characteristic.");
-                    setupMode = NotificationSetupMode.COMPAT;
+                    setupMode = NotificationSetupMode.DEFAULT;
                 }
                 if (!isSpecial && characteristic.isNotifiable()) {
                     return connection.setupNotification(characteristic.gattCharacteristic, setupMode);
                 }
 
                 if (isSpecial || characteristic.isIndicatable()) {
+                    Log.i("ble", "Set up indication for special");
                     return connection.setupIndication(characteristic.gattCharacteristic, setupMode);
                 }
 
